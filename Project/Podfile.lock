@@ -1,0 +1,17 @@
+PODS:
+  - MagicalRecord (2.2)
+  - STKCharts (0.1.0)
+
+DEPENDENCIES:
+  - MagicalRecord
+  - STKCharts (from `../STKCharts.podspec`)
+
+EXTERNAL SOURCES:
+  STKCharts:
+    :path: ../STKCharts.podspec
+
+SPEC CHECKSUMS:
+  MagicalRecord: b1fc46c99a9749fe7fe7e6f43a89b62ef5201933
+  STKCharts: 7c550e1eea1a3b5a2a0259ae6a4a1495e0667f50
+
+COCOAPODS: 0.25.0
