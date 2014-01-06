@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) NSMutableArray *data;
 
+@property (nonatomic, strong) UIColor *dataColor;
+
 - (id)initWithView:(UIView *)view;
 - (void)plotLineChartWithXAxixProperty:(NSString *)xAxisProperty yAxisProperty:(NSString *)yAxisProperty dataArray:(NSMutableArray *)data;
 - (void)updateLayout:(BOOL)animated;

@@ -43,12 +43,15 @@
     self.yProperty = yAxisProperty;
     self.data = data;
     
+    if (! self.dataColor) {
+        self.dataColor = [UIColor blackColor];
+    }
+    
     self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", yAxisProperty]] doubleValue];
-    [self.view layoutIfNeeded];
     
     [self.data enumerateObjectsUsingBlock:^(id p, NSUInteger idx, BOOL *stop) {
         UIView *pointView = [[UIView alloc] init];
-        [pointView setBackgroundColor:[UIColor blueColor]];
+        [pointView setBackgroundColor:self.dataColor];
         [pointView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [pointView.layer setCornerRadius:5.0f];
         [self.view addSubview:pointView];
@@ -58,7 +61,7 @@
         layer.sublayerTransform = CATransform3DMakeTranslation(5, 5, 0);
         
         CALayer *lineLayer = [CALayer layer];
-        lineLayer.backgroundColor = [UIColor blackColor].CGColor;
+        lineLayer.backgroundColor = self.dataColor.CGColor;
         [layer addSublayer:lineLayer];
         
         NSDictionary *dict = NSDictionaryOfVariableBindings(pointView);

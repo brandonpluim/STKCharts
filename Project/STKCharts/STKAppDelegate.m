@@ -63,8 +63,8 @@
     for (int i = 0; i < 20; i++) {
         STKDataPoint *point = [STKDataPoint MR_createEntity];
         [point setDateTime:[[NSDate date] dateByAddingTimeInterval:- (60 * 60 * 24 * i)]];
-//        [point setPointValue:[NSNumber numberWithFloat:arc4random() % 10]];
-        [point setPointValue:[NSNumber numberWithFloat:i]];
+        [point setPointValue:[NSNumber numberWithFloat:arc4random() % 10]];
+//        [point setPointValue:[NSNumber numberWithFloat:i]];
     }
     [[NSManagedObjectContext MR_defaultContext] MR_saveOnlySelfAndWait];
 }
