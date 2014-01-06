@@ -43,7 +43,7 @@
     self.yProperty = yAxisProperty;
     self.data = data;
     
-    self.maxYValue = [[self.data valueForKeyPath:@"@max.pointValue"] doubleValue];
+    self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", yAxisProperty]] doubleValue];
     [self.view layoutIfNeeded];
     
     [self.data enumerateObjectsUsingBlock:^(id p, NSUInteger idx, BOOL *stop) {
@@ -109,14 +109,14 @@
         [self.view addConstraints:hCs];        
     }];
     
-    [UIView animateWithDuration:0.7 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         [self.view layoutIfNeeded];
     }];
     
     [self.pointViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         if (idx > 0) {
             UIView *v = self.pointViews[idx - 1];
-            [UIView animateWithDuration:0.7 animations:^{
+            [UIView animateWithDuration:0.4 animations:^{
                 setLayerToLineFromAToB(view.layer.sublayers[0], v.center, view.center, 1);
             }];
         }
