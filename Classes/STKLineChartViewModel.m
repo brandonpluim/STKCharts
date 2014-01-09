@@ -15,7 +15,6 @@
 @property (nonatomic, strong) NSMutableArray *horizontalContraints;
 @property (nonatomic, strong) NSMutableArray *pointViews;
 
-@property (nonatomic, assign) double maxYValue;
 @property (nonatomic, strong) NSString *yProperty;
 @property (nonatomic, strong) NSString *xProperty;
 
@@ -47,7 +46,9 @@
         self.dataColor = [UIColor blackColor];
     }
     
-    self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", yAxisProperty]] doubleValue];
+    if (! self.maxYValue) {
+        self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", yAxisProperty]] doubleValue];
+    }
     
     [self.data enumerateObjectsUsingBlock:^(id p, NSUInteger idx, BOOL *stop) {
         UIView *pointView = [[UIView alloc] init];
@@ -129,7 +130,7 @@
 - (float)verticalConstraintForPoint:(id)point
 {
     float percentage = [[point valueForKey:self.yProperty] floatValue] / self.maxYValue;
-    return (self.view.frame.size.height - 10) * percentage;
+    return (self.view.frame.size.height * percentage) - 5;
 }
 
 - (float)horizontalConstraintForPoint:(id)point

@@ -31,6 +31,7 @@
     NSMutableArray *data = [[STKDataPoint MR_findAllSortedBy:@"dateTime" ascending:YES] mutableCopy];
     
     self.viewModel = [[STKLineChartViewModel alloc] initWithView:self.chartView];
+    [self.viewModel setMaxYValue:15];
     [self.viewModel plotLineChartWithXAxixProperty:@"dateTime" yAxisProperty:@"pointValue" dataArray:data];
 }
 

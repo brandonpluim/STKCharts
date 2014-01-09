@@ -11,7 +11,7 @@
 @interface STKLineChartViewModel : NSObject
 
 @property (nonatomic, strong) NSMutableArray *data;
-
+@property (nonatomic, assign) double maxYValue;
 @property (nonatomic, strong) UIColor *dataColor;
 
 - (id)initWithView:(UIView *)view;
