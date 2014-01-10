@@ -138,8 +138,8 @@
         [self.view removeConstraints:self.horizontalContraints[idx]];
         
         NSDictionary *dict = NSDictionaryOfVariableBindings(pointView);
-        NSString *verticalConstraintsString = [NSString stringWithFormat:@"V:[pointView(10)]-(%f)-|", [self verticalConstraintForPoint:self.data[idx]]];
-        NSString *horizontalConstraintsString = [NSString stringWithFormat:@"H:|-(%f)-[pointView(10)]", [self horizontalConstraintForPoint:self.data[idx]]];
+        NSString *verticalConstraintsString = [NSString stringWithFormat:@"V:[pointView(%i)]-(%f)-|", self.pointSize, [self verticalConstraintForPoint:self.data[idx]]];
+        NSString *horizontalConstraintsString = [NSString stringWithFormat:@"H:|-(%f)-[pointView(%i)]", [self horizontalConstraintForPoint:self.data[idx]], self.pointSize];
         
         NSArray *hCs = [NSLayoutConstraint constraintsWithVisualFormat:horizontalConstraintsString options:0 metrics:nil views:dict];
         [self.horizontalContraints replaceObjectAtIndex:idx withObject:hCs];
