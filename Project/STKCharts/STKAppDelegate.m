@@ -60,7 +60,7 @@
 - (void)setupSampleData
 {
     [STKDataPoint MR_truncateAll];
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 9; i++) {
         STKDataPoint *point = [STKDataPoint MR_createEntity];
         [point setDateTime:[[NSDate date] dateByAddingTimeInterval:- (60 * 60 * 24 * i)]];
         [point setPointValue:[NSNumber numberWithFloat:arc4random() % 10]];

@@ -18,6 +18,10 @@
 @property (nonatomic, strong) NSString *yProperty;
 @property (nonatomic, strong) NSString *xProperty;
 
+@property (readwrite, assign) int totalPoints;
+@property (readwrite, assign) int pointSize;
+@property (readwrite, assign) int pointRadius;
+
 @end
 
 @implementation STKLineChartViewModel
@@ -67,24 +71,42 @@
         self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", self.yProperty]] doubleValue];
     }
     
+    // Get the point size depending on the number of total points
+    self.totalPoints = self.data.count;
+    
+    if (self.totalPoints < 10)
+    {
+        self.pointSize = 8;
+        self.pointRadius = 4.0f;
+    }
+    else if ((self.totalPoints >= 10) && (self.totalPoints <= 20))
+    {
+        self.pointSize = 6;
+        self.pointRadius = 3.0f;
+    }
+    else {
+        self.pointSize = 4;
+        self.pointRadius = 2.0f;
+    }
+    
     [self.data enumerateObjectsUsingBlock:^(id p, NSUInteger idx, BOOL *stop) {
         UIView *pointView = [[UIView alloc] init];
         [pointView setBackgroundColor:self.dataColor];
         [pointView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [pointView.layer setCornerRadius:5.0f];
+        [pointView.layer setCornerRadius:self.pointRadius];
         [self.view addSubview:pointView];
         [self.pointViews addObject:pointView];
         
         CALayer *layer = pointView.layer;
-        layer.sublayerTransform = CATransform3DMakeTranslation(5, 5, 0);
+        layer.sublayerTransform = CATransform3DMakeTranslation(self.pointRadius, self.pointRadius, 0);
         
         CALayer *lineLayer = [CALayer layer];
         lineLayer.backgroundColor = self.dataColor.CGColor;
         [layer addSublayer:lineLayer];
         
         NSDictionary *dict = NSDictionaryOfVariableBindings(pointView);
-        NSString *verticalConstraintsString = [NSString stringWithFormat:@"V:[pointView(10)]-(%f)-|", [self verticalConstraintForPoint:p]];
-        NSString *horizontalConstraintsString = [NSString stringWithFormat:@"H:|-(%f)-[pointView(10)]", [self horizontalConstraintForPoint:p]];
+        NSString *verticalConstraintsString = [NSString stringWithFormat:@"V:[pointView(%i)]-(%f)-|", self.pointSize, [self verticalConstraintForPoint:p]];
+        NSString *horizontalConstraintsString = [NSString stringWithFormat:@"H:|-(%f)-[pointView(%i)]", [self horizontalConstraintForPoint:p], self.pointSize];
         
         NSArray *hCs = [NSLayoutConstraint constraintsWithVisualFormat:horizontalConstraintsString options:0 metrics:nil views:dict];
 //        [self.horizontalContraints addObject:hCs];
@@ -146,7 +168,7 @@
 - (float)verticalConstraintForPoint:(id)point
 {
     float percentage = [[point valueForKey:self.yProperty] floatValue] / self.maxYValue;
-    return (self.view.frame.size.height * percentage) - 5;
+    return (self.view.frame.size.height * percentage) - 3;
 }
 
 - (float)horizontalConstraintForPoint:(id)point
