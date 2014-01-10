@@ -46,8 +46,25 @@
         self.dataColor = [UIColor blackColor];
     }
     
+    [self drawPoints];
+    
+}
+
+- (void)updateData:(NSArray *)data
+{
+    self.data = [data mutableCopy];
+    [[self.view subviews] enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+        [view removeFromSuperview];
+    }];
+    [self.pointViews removeAllObjects];
+    
+    [self drawPoints];
+}
+
+- (void)drawPoints
+{
     if (! self.maxYValue) {
-        self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", yAxisProperty]] doubleValue];
+        self.maxYValue = [[self.data valueForKeyPath:[NSString stringWithFormat:@"@max.%@", self.yProperty]] doubleValue];
     }
     
     [self.data enumerateObjectsUsingBlock:^(id p, NSUInteger idx, BOOL *stop) {
@@ -70,10 +87,10 @@
         NSString *horizontalConstraintsString = [NSString stringWithFormat:@"H:|-(%f)-[pointView(10)]", [self horizontalConstraintForPoint:p]];
         
         NSArray *hCs = [NSLayoutConstraint constraintsWithVisualFormat:horizontalConstraintsString options:0 metrics:nil views:dict];
-        [self.horizontalContraints addObject:hCs];
+//        [self.horizontalContraints addObject:hCs];
         
         NSArray *vCs = [NSLayoutConstraint constraintsWithVisualFormat:verticalConstraintsString options:0 metrics:nil views:dict];
-        [self.verticalConstraints addObject:vCs];
+//        [self.verticalConstraints addObject:vCs];
         
         [self.view addConstraints:vCs];
         [self.view addConstraints:hCs];
@@ -90,7 +107,6 @@
             [CATransaction setDisableActions:NO];
         }
     }];
-    
 }
 
 - (void)updateLayout:(BOOL)animated

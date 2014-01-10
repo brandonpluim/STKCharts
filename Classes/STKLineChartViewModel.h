@@ -17,5 +17,6 @@
 - (id)initWithView:(UIView *)view;
 - (void)plotLineChartWithXAxixProperty:(NSString *)xAxisProperty yAxisProperty:(NSString *)yAxisProperty dataArray:(NSMutableArray *)data;
 - (void)updateLayout:(BOOL)animated;
+- (void)updateData:(NSArray *)data;
 
 @end
